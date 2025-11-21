@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: Data Service API
+  version: 1.0.0
+
+paths:
+  /students:
+    post:
+      tags:
+        - student
+      summary: Create student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentDataCreateRequest'
+      responses:
+        '200':
+          description: Student created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDataResponse'
+
+    get:
+      tags:
+        - student
+      summary: Get student by ID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Student found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDataResponse'
+
+components:
+  schemas:
+    StudentDataCreateRequest:
+      type: object
+      required:
+        - fullName
+        - passport
+      properties:
+        fullName:
+          type: string
+        passport:
+          type: string
+
+    StudentDataResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        fullName:
+          type: string
+        passport:
+          type: string
