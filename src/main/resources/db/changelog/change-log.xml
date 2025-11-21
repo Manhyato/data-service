@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Создание схемы utmn -->
+    <changeSet id="1" author="you">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS my_schema;
+        </sql>
+    </changeSet>
+
+
+    <!-- Создание таблицы student -->
+    <changeSet id="2" author="lisunenko">
+        <createTable tableName="student" schemaName="utmn">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fio" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passport" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Добавление комментариев -->
+    <changeSet id="3" author="lisunenko">
+        <addColumn tableName="student" schemaName="utmn">
+            <column name="dummy" type="varchar(1)" defaultValue=" " />
+        </addColumn>
+        <dropColumn columnName="dummy" tableName="student" schemaName="utmn"/>
+    </changeSet>
+
+    <changeSet id="4" author="lisunenko">
+        <sql>
+            COMMENT ON TABLE utmn.student IS 'Таблица для хранения информации о студентах';
+            COMMENT ON COLUMN utmn.student.fio IS 'ФИО студента';
+            COMMENT ON COLUMN utmn.student.passport IS 'Серия и номер паспорта студента';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
+
+
